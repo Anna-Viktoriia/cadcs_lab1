@@ -1,5 +1,5 @@
 ---
-mode: agent
+agent: agent
 description: "Створи кросплатформний GitHub Actions workflow за skill github-actions."
 ---
 

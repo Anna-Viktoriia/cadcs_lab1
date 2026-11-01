@@ -1,5 +1,5 @@
 ---
-mode: agent
+agent: agent
 description: "Налаштуй venv, pytest, запуск і пакування Python-проєкту за skill build-and-test."
 ---
 

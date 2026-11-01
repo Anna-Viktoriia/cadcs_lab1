@@ -1,5 +1,5 @@
 ---
-mode: agent
+agent: agent
 description: "Запусти повний сценарій налаштування проєкту: git-init, create-project, create-build, create-actions і check."
 ---
 

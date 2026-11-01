@@ -1,5 +1,5 @@
 ---
-mode: agent
+agent: agent
 description: "Створи початкову структуру Python Hello World-проєкту за skill project-scaffold."
 ---
 

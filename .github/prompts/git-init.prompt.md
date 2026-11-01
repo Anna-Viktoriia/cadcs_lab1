@@ -1,5 +1,5 @@
 ---
-mode: agent
+agent: agent
 description: "Перевір Git-репозиторій і безпечно створи або доповни .gitignore для Python-проєкту без повторення правил."
 ---
 

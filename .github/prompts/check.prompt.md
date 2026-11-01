@@ -1,5 +1,5 @@
 ---
-mode: agent
+agent: agent
 description: "Перевір структуру, skills, CI, тести та безпеку проєкту без змін у робочому дереві; виведи PASS/FAIL."
 ---
 

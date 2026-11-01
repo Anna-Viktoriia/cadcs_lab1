@@ -26,7 +26,7 @@
 - `/create-build` — підготовка збирання та перевірок.
 - `/create-actions` — підготовка GitHub Actions.
 - `/check` — перевірка результату.
-- `/init` — запуск початкового сценарію роботи агента.
+- `/lab1-init` — запуск початкового сценарію роботи агента.
 
 ## Дані між етапами
 
@@ -46,7 +46,7 @@
 | Шлях | Роль |
 |---|---|
 | `.github/agents/build-engineer.agent.md` | Manifest агента: визначає агента та його робочу роль. |
-| `.github/prompts/{git-init,create-project,create-build,create-actions,check,init}.prompt.md` | Commands: окремі інструкції для етапів роботи агента. |
+| `.github/prompts/{git-init,create-project,create-build,create-actions,check,lab1-init}.prompt.md` | Commands: окремі інструкції для етапів роботи агента. |
 | `.github/skills/{project-scaffold,build-and-test,github-actions}/SKILL.md` | Skills: спеціалізовані настанови, які агент застосовує під час виконання завдань. |
 | `.github/workflows` | CI: конфігурація автоматичних перевірок у GitHub Actions. |
 

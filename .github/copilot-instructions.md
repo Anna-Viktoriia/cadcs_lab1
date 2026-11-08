@@ -50,6 +50,10 @@ instructions.
 - Keep dependency installation, tests, and PyInstaller packaging in
   `ci.sh`/`ci.bat`. GitHub Actions should only set up Python, call the
   platform script, and upload `dist/`.
+- The generated workflow runs on `push` and `pull_request` for `develop` and
+  `main` across Ubuntu, Windows, and macOS. Job and step conditions must not
+  skip CI based on branch names; only platform-specific `runner.os` conditions
+  are allowed for selecting `ci.sh` or `ci.bat`.
 - Create files only after checking whether they exist. Preserve existing
   content, make repeat runs idempotent, and avoid duplicate requirements or
   `.gitignore` entries.

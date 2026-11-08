@@ -17,6 +17,10 @@
 - `build-and-test` — настанови зі збирання та перевірки проєкту.
 - `github-actions` — настанови з автоматизації перевірок через GitHub Actions.
 
+Workflow, створений етапом `create-actions`, запускається на `push` і
+`pull_request` до `develop` та `main`. Він запускає наявний CI-скрипт на
+кожній ОС матриці; branch-based умови окремих job або кроків не дозволені.
+
 ## Commands
 
 Команди доступні як prompt-файли:
@@ -48,7 +52,7 @@
 | `.github/agents/build-engineer.agent.md` | Manifest агента: визначає агента та його робочу роль. |
 | `.github/prompts/{git-init,create-project,create-build,create-actions,check,lab1-init}.prompt.md` | Commands: окремі інструкції для етапів роботи агента. |
 | `.github/skills/{project-scaffold,build-and-test,github-actions}/SKILL.md` | Skills: спеціалізовані настанови, які агент застосовує під час виконання завдань. |
-| `.github/workflows` | CI: конфігурація автоматичних перевірок у GitHub Actions. |
+| `.github/workflows` | CI: workflow, згенерований етапом `create-actions` для автоматичних перевірок у GitHub Actions. |
 
 Назви у фігурних дужках позначають перелік файлів із відповідними назвами,
 а не окремі файли з фігурними дужками в назві.

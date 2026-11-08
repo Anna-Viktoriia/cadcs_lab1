@@ -71,8 +71,13 @@ description: "Перевір структуру, skills, CI, тести та б�
    умовою пропуску окремого CI-кроку.
 10. У вихідному репозиторії (не тимчасовій копії) через `git ls-files`
     перевір, що `.venv/`, `dist/`, `build/` і `__pycache__` не
-    відстежуються. Збережи початковий результат `git status --short`;
-    нічого не додавай до індексу.
+    відстежуються. Перевір через `git ls-files --stage -- ci.sh run.sh`,
+    що відстежувані shell-скрипти мають mode `100755`; якщо `ci.sh` уже
+    відстежується з mode `100644`, познач FAIL, бо `./ci.sh` у Linux/macOS
+    CI завершиться з `Permission denied`. Якщо файли ще untracked, не додавай
+    їх до індексу: вкажи, що перед комітом потрібна команда
+    `git add --chmod=+x -- ci.sh run.sh`. Збережи початковий результат
+    `git status --short`; нічого не додавай до індексу.
 11. Виконай локальну перевірку текстових файлів на випадково додані секрети,
     виключивши `.git`, `.venv`, `dist`, `build` і бінарні файли. Якщо
     доступного локального засобу пошуку секретів немає, шукай типові маркери
@@ -104,11 +109,14 @@ description: "Перевір структуру, skills, CI, тести та б�
 ```shell
 git status --short
 git ls-files
+git ls-files --stage -- ci.sh run.sh
 ```
 
 У тимчасовій копії виконай на Linux/macOS:
 
 ```shell
+test -x ci.sh
+test -x run.sh
 ./ci.sh
 .venv/bin/python -m pytest -v tests/test_calc.py::test_basic_addition
 ```

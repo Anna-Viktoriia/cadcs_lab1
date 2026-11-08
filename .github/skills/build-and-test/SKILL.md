@@ -40,6 +40,9 @@ description: "Налаштовуй Python-залежності, pytest, вірт
   `.venv`, без активації; встановлює `requirements.txt`; запускає тести;
   пакує застосунок PyInstaller у `dist/`.
 - `run.sh` і `run.bat`, які запускають застосунок інтерпретатором із `.venv`.
+- `ci.sh` і `run.sh` мають бути executable у файловій системі та збережені в
+  Git з mode `100755`, інакше прямий виклик `./ci.sh` у Linux/macOS CI
+  завершиться помилкою `Permission denied`.
 
 # Підкоманди
 
@@ -70,7 +73,14 @@ description: "Налаштовуй Python-залежності, pytest, вірт
 
 5. Не активуй середовище у скриптах. Використовуй напряму
    `.venv/bin/python` на Linux/macOS і `.venv\Scripts\python.exe` на Windows.
-6. Скрипти `ci.sh` і `ci.bat` мають виконувати кроки строго послідовно:
+6. На Linux/macOS встанови executable-біт для shell-скриптів командою
+   `chmod +x ci.sh run.sh` і перевір `test -x ci.sh && test -x run.sh`.
+   Git має зберегти mode `100755` для обох файлів. На Windows, де
+   `core.filemode` часто вимкнений, перед комітом додай саме ці скрипти з
+   executable mode командою `git add --chmod=+x -- ci.sh run.sh`; не
+   стверджуй, що mode збережено, якщо його не перевірено через
+   `git ls-files --stage -- ci.sh run.sh`.
+7. Скрипти `ci.sh` і `ci.bat` мають виконувати кроки строго послідовно:
 
    1. створення `.venv`, якщо її немає;
    2. встановлення залежностей командою
@@ -80,11 +90,11 @@ description: "Налаштовуй Python-залежності, pytest, вірт
       hello --distpath dist/ src/hello/__main__.py` на Linux/macOS або
       `.venv\Scripts\pyinstaller.exe` з відповідними параметрами на Windows.
 
-7. Скрипти `run.sh` і `run.bat` мають запускати `hello` Python-інтерпретатором
+8. Скрипти `run.sh` і `run.bat` мають запускати `hello` Python-інтерпретатором
    із `.venv`. Якщо середовища немає, створи його та встанови залежності
    всередині нього. Перед запуском налаштуй шлях імпорту пакета з `src/`, не
    встановлюючи залежності глобально.
-8. Після змін виконай відповідні перевірки та повідом точний результат.
+9. Після змін виконай відповідні перевірки та повідом точний результат.
 
 # Вимоги до скриптів і помилки
 
@@ -105,6 +115,9 @@ description: "Налаштовуй Python-залежності, pytest, вірт
 
 - `pytest` завершується успішно та показує, що тест пройшов (`passed`).
 - Команда `python -m pytest` виконується інтерпретатором із `.venv`.
+- На Linux/macOS `ci.sh` і `run.sh` проходять `test -x`; якщо вони вже
+  відстежуються Git, `git ls-files --stage -- ci.sh run.sh` показує mode
+  `100755`.
 - Пакування створює `dist/hello` на Linux/macOS або `dist/hello.exe` на
   Windows.
 - `run.sh` або `run.bat` запускає застосунок через Python із `.venv`.

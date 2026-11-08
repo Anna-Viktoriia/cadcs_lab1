@@ -25,7 +25,11 @@ description: "Створи кросплатформний GitHub Actions workflo
 6. Не додавай branch-based умови чи кроки, що можуть пропустити CI за
    назвою гілки, подією або результатом іншого кроку. Для виконання скриптів
    дозволені лише platform-specific умови на `runner.os`.
-7. Перевір YAML, структуру job, matrix, тригери та відсутність умов
+7. Переконайся, що `ci.sh` має Git mode `100755`, оскільки workflow запускає
+   його як `./ci.sh`. Перевір через `git ls-files --stage -- ci.sh`; якщо
+   файл ще не відстежується або Git на Windows не зберіг mode, явно повідом
+   про необхідність `git add --chmod=+x -- ci.sh run.sh` перед комітом.
+8. Перевір YAML, структуру job, matrix, тригери та відсутність умов
    пропуску за гілкою.
 
 # Очікувані файли
@@ -43,6 +47,7 @@ description: "Створи кросплатформний GitHub Actions workflo
 - є кроки checkout, setup-python версії `3.11` та upload-artifact для
   `dist/`;
 - команди `./ci.sh` і `ci.bat` запускаються лише відповідно до ОС runner;
+- `ci.sh` має executable Git mode `100755` для прямого запуску на Linux/macOS;
 - жодна job або step не має branch-based `if`-умови чи умови на вихід
   іншого кроку;
 - YAML не дублює встановлення залежностей, pytest або PyInstaller.

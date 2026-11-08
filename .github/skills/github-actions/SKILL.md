@@ -31,6 +31,12 @@ description: "Створюй і перевіряй GitHub Actions workflow дл�
 - запуском `./ci.sh` на Linux/macOS за умови `if: runner.os != 'Windows'`;
 - запуском `ci.bat` на Windows за умови `if: runner.os == 'Windows'`.
 
+Оскільки workflow викликає `./ci.sh` напряму, Git має зберігати для `ci.sh`
+mode `100755`. Переконайся також, що `run.sh` має mode `100755`, щоб прямий
+локальний запуск працював після checkout. На POSIX перевіряй executable-біт
+файлів; на Windows перевіряй Git index, якщо файли вже відстежуються, або
+повідом про потребу `git add --chmod=+x -- ci.sh run.sh` перед комітом.
+
 Не додавай branch-based `if`-умови для job, CI-скриптів або завантаження
 артефакту. Кожне відповідне push або pull request у `develop` чи `main` має
 запускати CI на всіх трьох ОС. Не додавай кроків, які перевіряють назву
@@ -64,6 +70,8 @@ description: "Створюй і перевіряй GitHub Actions workflow дл�
   `actions/upload-artifact`.
 - `./ci.sh` виконується на Linux/macOS, а `ci.bat` — на Windows. Їхні
   єдині `if`-умови перевіряють `runner.os`.
+- `ci.sh` відстежується Git із mode `100755`, тож `./ci.sh` не завершується
+  через `Permission denied` на runner-ах Linux/macOS.
 - Жоден job чи step не має branch-based умови або залежності від результату
   іншого кроку; жодна цільова гілка не може пропустити CI через step condition.
 - Workflow не містить логіки встановлення залежностей, тестування чи

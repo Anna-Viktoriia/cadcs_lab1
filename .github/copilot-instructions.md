@@ -20,6 +20,11 @@ workflow; they may not exist before that workflow has completed.
 
 Run Python dependencies only through the project virtual environment. The CI
 scripts use the environment's interpreter directly and do not need activation.
+On Linux/macOS, `ci.sh` and `run.sh` must have executable filesystem
+permissions. Because GitHub Actions runs `./ci.sh` directly, Git must track
+both shell scripts with mode `100755`. If Windows Git does not preserve that
+mode automatically, use `git add --chmod=+x -- ci.sh run.sh` before committing
+and verify with `git ls-files --stage -- ci.sh run.sh`.
 
 ## Architecture and agent workflow
 

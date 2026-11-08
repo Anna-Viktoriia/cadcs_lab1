@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+
+if [ ! -d ".venv" ]; then
+  python3 -m venv .venv
+fi
+
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m pytest
+.venv/bin/pyinstaller --onefile --name hello --distpath dist/ src/hello/__main__.py

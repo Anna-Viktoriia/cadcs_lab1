@@ -8,3 +8,6 @@ dist/
 *.egg-info/
 .coverage
 htmlcov/
+.vscode/
+.idea/
+*.pyc
